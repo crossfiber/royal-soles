@@ -1,0 +1,25 @@
+<main>
+  <div class="wrap">
+    {% if collection.handle == 'the-drop' %}
+    <section class="drop-hero">
+      <div class="when">Friday 7:00 PM EST</div>
+      <h1>The Drop</h1>
+      <p>New pairs hit every week at one set time. Once a pair sells it does not come back, so be here when the clock hits zero.</p>
+      <div class="clock" id="bigClock">00<b>:</b>00<b>:</b>00<b>:</b>00</div>
+    </section>
+    {% endif %}
+    <section class="catalog">
+      <div class="catalog-h">
+        <h2>{% if collection.handle == 'the-drop' %}This <i>Week</i>{% else %}{{ collection.title }}{% endif %}</h2>
+        <span>{{ collection.products_count }} pairs</span>
+      </div>
+      {% paginate collection.products by 48 %}
+      <div class="grid">
+        {% for product in collection.products %}{% render 'product-card', product: product %}
+        {% else %}<div class="empty">Nothing here right now. Check back soon.</div>{% endfor %}
+      </div>
+      {% if paginate.pages > 1 %}<div class="toolbar">{{ paginate | default_pagination }}</div>{% endif %}
+      {% endpaginate %}
+    </section>
+  </div>
+</main>

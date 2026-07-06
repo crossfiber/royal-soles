@@ -8,6 +8,14 @@ Live preview: https://crossfiber.github.io/royal-soles/
 
 ## Update log
 
+- 2026-07-06: SHOPIFY DEPLOY. Ported v0.5 prototype to a full Liquid theme (layout, index with
+  Just In shelf + size-filterable grid, product page with per-variant pricing, collection with
+  Drop hero + countdown, cart, search, stubs, settings schema). Created "Shop All" smart
+  collection (any variant price > 0, sorted newest first, 17 products picked up). Theme zip
+  committed to repo, created on store via themeCreate as "Royal Soles by Cross Designs v1.0",
+  processed clean, UNPUBLISHED. Publish must be done in admin (API publish blocked). Storefront
+  behind password page until client resumes paid plan. by Cowork session
+
 - 2026-07-06: HOTFIX. index.html had been silently truncated at 29,171 bytes during v0.4/v0.5
   edits (the old file's exact size, some sync layer was capping writes). The unterminated
   script tag disabled ALL JS: no products, dead tabs. Rebuilt the full file in the sandbox,

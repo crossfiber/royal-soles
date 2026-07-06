@@ -1,0 +1,49 @@
+<main>
+  <div class="wrap">
+    <div class="pd" style="padding-left:0;padding-right:0">
+      <div class="art">
+        {% if product.featured_image %}<img src="{{ product.featured_image | image_url: width: 1000 }}" alt="{{ product.title | escape }}">{% endif %}
+      </div>
+      <div>
+        <div class="brand">{{ product.vendor }}{% if product.tags contains 'drop' %} &middot; this week&#8217;s drop{% endif %}</div>
+        <h2>{{ product.title }}</h2>
+        <div class="price" id="sheetPrice">{{ product.price_min | money }}{% if product.price_varies %} to {{ product.price_max | money }}{% endif %}</div>
+        <form method="post" action="/cart/add" id="buyForm">
+          <input type="hidden" name="id" id="variantId" value="">
+          <div class="size-h"><b>Size</b><span id="sizeHint" style="font-size:.8rem;color:var(--dim)">{% if product.price_varies %}price varies by size{% else %}one price, all sizes{% endif %}</span></div>
+          <div class="sizes" id="sizeGrid">
+            {% for variant in product.variants %}
+            <button type="button" class="size{% unless variant.available %} out{% endunless %}" data-id="{{ variant.id }}" data-price="{{ variant.price | money }}" data-title="{{ variant.title | escape }}">{{ variant.title | remove: 'Size' | remove: 'SIze' | strip }}</button>
+            {% endfor %}
+          </div>
+          <div class="cta">
+            <button class="btn" type="submit">Add to bag</button>
+            <a class="btn line" href="/">Back</a>
+          </div>
+        </form>
+        <div class="fine">
+          {{ product.description }}
+          <br>Ships in 1 to 2 business days. Checkout runs through Shopify with Shop Pay and Apple Pay.
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+"use strict";
+(function(){
+  var picked=null;
+  document.getElementById('sizeGrid').addEventListener('click',function(e){
+    var b=e.target.closest('.size'); if(!b||b.classList.contains('out'))return;
+    picked=b;
+    document.querySelectorAll('.size').forEach(function(x){x.classList.remove('on');});
+    b.classList.add('on');
+    document.getElementById('variantId').value=b.dataset.id;
+    document.getElementById('sheetPrice').textContent=b.dataset.price;
+    document.getElementById('sizeHint').textContent=b.dataset.title;
+  });
+  document.getElementById('buyForm').addEventListener('submit',function(e){
+    if(!picked){e.preventDefault();toast('Pick a size first');}
+  });
+})();
+</script>

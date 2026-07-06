@@ -1,0 +1,26 @@
+<main>
+  <div class="wrap">
+    <div class="shop-head"><h1>Your <i>Bag</i></h1></div>
+    {% if cart.item_count == 0 %}
+      <div class="bag-empty">Your bag is empty.</div>
+      <div style="text-align:center;padding-bottom:34px"><a class="btn" href="/">Back to the shop</a></div>
+    {% else %}
+      {% for item in cart.items %}
+      <div class="bag-item">
+        <div class="thumb">{% if item.image %}<img src="{{ item.image | image_url: width: 200 }}" alt="">{% endif %}</div>
+        <div class="bi"><b>{{ item.product.title }}</b><span>{{ item.variant.title }}</span></div>
+        <div class="bip">{{ item.final_line_price | money }}</div>
+        <a class="rm" aria-label="Remove" href="/cart/change?line={{ forloop.index }}&quantity=0">&times;</a>
+      </div>
+      {% endfor %}
+      <div class="bag-foot">
+        <div class="row"><span>Subtotal</span><span>{{ cart.total_price | money }}</span></div>
+        <div class="row"><span>Shipping</span><span>At checkout</span></div>
+        <div class="row total"><span>Total</span><span>{{ cart.total_price | money }}</span></div>
+        <form action="/cart" method="post">
+          <button class="btn" style="width:100%;padding:16px" name="checkout">Checkout</button>
+        </form>
+      </div>
+    {% endif %}
+  </div>
+</main>

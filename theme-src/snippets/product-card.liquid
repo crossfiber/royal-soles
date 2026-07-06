@@ -1,0 +1,13 @@
+<a class="card" href="{{ product.url }}"
+   data-sizes="{% for v in product.variants %}{% if v.available %}{{ v.title | downcase | remove: 'size' | strip }},{% endif %}{% endfor %}">
+  <div class="art">
+    {% if product.tags contains 'drop' %}<span class="flag">Drop</span>{% endif %}
+    {% if product.featured_image %}<img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title | escape }}" loading="lazy">
+    {% else %}<span class="cond-flag">photo coming</span>{% endif %}
+  </div>
+  <div class="meta">
+    <div class="name">{{ product.title }}</div>
+    <div class="sub">{% if product.price_varies %}price varies by size{% else %}one price, all sizes{% endif %}</div>
+    <div class="price">{{ product.price_min | money }}{% if product.price_varies %}+{% endif %}</div>
+  </div>
+</a>

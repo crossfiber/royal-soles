@@ -1,0 +1,80 @@
+<main>
+  <div class="wrap">
+    {% assign all = collections['shop-all'] %}
+    <section class="shelf">
+      <div class="shelf-h"><h2>Just <i>In</i></h2></div>
+      <div class="rail">
+        {% for product in all.products limit: 6 %}{% render 'product-card', product: product %}{% endfor %}
+      </div>
+    </section>
+    <section class="catalog">
+      <div class="catalog-h">
+        <h2>Shop <i>All</i></h2>
+        <span id="shopCount">{{ all.products_count }} pairs</span>
+      </div>
+      <div class="toolbar">
+        <button class="filter-btn" onclick="openFilters()">
+          <svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+          Filters<b id="filterCount"></b>
+        </button>
+        <button class="filter-btn" onclick="resetFilters()" id="clearBtn" style="display:none">Clear</button>
+      </div>
+      {% paginate all.products by 48 %}
+      <div class="grid" id="shopGrid">
+        {% for product in all.products %}{% render 'product-card', product: product %}{% endfor %}
+      </div>
+      {% if paginate.pages > 1 %}<div class="toolbar">{{ paginate | default_pagination }}</div>{% endif %}
+      {% endpaginate %}
+    </section>
+  </div>
+</main>
+
+<div class="veil" id="veil" onclick="closeAll()"></div>
+<div class="sheet" id="fsheet" role="dialog" aria-modal="true" aria-label="Filters">
+  <div class="fsheet-body">
+    <div class="fgroup"><h3>Size</h3><div class="chips" id="sizeChips"></div></div>
+  </div>
+  <div class="fsheet-foot">
+    <button class="btn line" onclick="resetFilters()">Reset</button>
+    <button class="btn" id="applyBtn" onclick="closeAll()">Show all</button>
+  </div>
+</div>
+
+<script>
+"use strict";
+var activeSize=null;
+function cards(){return Array.prototype.slice.call(document.querySelectorAll('#shopGrid .card'));}
+function allSizes(){
+  var s={};
+  cards().forEach(function(c){(c.dataset.sizes||'').split(',').forEach(function(z){z=z.trim();if(z)s[z]=1;});});
+  return Object.keys(s).sort(function(a,b){return parseFloat(a)-parseFloat(b);});
+}
+function renderFilters(){
+  var sc=document.getElementById('sizeChips');
+  sc.innerHTML='<button class="chip'+(!activeSize?' on':'')+'" onclick="setSize(null)">All</button>'
+   +allSizes().map(function(z){return '<button class="chip'+(z===activeSize?' on':'')+'" onclick="setSize(\''+z+'\')">'+z+'</button>';}).join('');
+  var n=0;
+  cards().forEach(function(c){
+    var ok=!activeSize||(','+c.dataset.sizes+',').indexOf(','+activeSize+',')>-1;
+    c.style.display=ok?'':'none'; if(ok)n++;
+  });
+  document.getElementById('shopCount').textContent=n+' pairs';
+  document.getElementById('filterCount').textContent=activeSize?1:'';
+  document.getElementById('clearBtn').style.display=activeSize?'inline-flex':'none';
+  document.getElementById('applyBtn').textContent='Show '+n+' pairs';
+}
+function setSize(z){activeSize=z;renderFilters();}
+function resetFilters(){activeSize=null;renderFilters();}
+function openFilters(){
+  renderFilters();
+  document.getElementById('veil').classList.add('open');
+  document.getElementById('fsheet').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeAll(){
+  document.getElementById('fsheet').classList.remove('open');
+  document.getElementById('veil').classList.remove('open');
+  document.body.style.overflow='';
+}
+renderFilters();
+</script>
