@@ -30,9 +30,9 @@
 
   /* ===== header: centered logo, icons right ===== */
   header{background:var(--bg);border-bottom:1px solid var(--line)}
-  .masthead{position:relative;display:flex;align-items:center;justify-content:center;padding:18px 0 14px}
-  .masthead img{height:64px;width:auto}
-  @media(min-width:700px){.masthead img{height:84px}}
+  .masthead{position:relative;display:flex;align-items:center;justify-content:center;padding:20px 0 16px}
+  .masthead img{height:110px;width:auto}
+  @media(min-width:700px){.masthead img{height:150px}}
   .head-icons{position:absolute;right:18px;top:50%;transform:translateY(-50%);display:flex;gap:2px}
   .icon-btn{width:42px;height:42px;display:grid;place-items:center;position:relative}
   .icon-btn svg{width:20px;height:20px;stroke:var(--ink);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
@@ -197,7 +197,7 @@
   @media(min-width:700px){.f-grid{grid-template-columns:2fr 1fr 1fr;gap:40px}}
   .f-brand{grid-column:1/-1}
   @media(min-width:700px){.f-brand{grid-column:auto}}
-  .f-brand img{height:52px;width:auto;margin-bottom:12px}
+  .f-brand img{height:84px;width:auto;margin-bottom:12px}
   .f-brand p{color:var(--dim);font-size:.88rem;max-width:34ch;line-height:1.6}
   footer h3{font-family:'Barlow';font-style:normal;font-weight:700;font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
   footer ul{list-style:none}
@@ -240,7 +240,6 @@
     <section class="shelf">
       <div class="shelf-h">
         <h2>Just <i>In</i></h2>
-        <span>fresh pickups this week</span>
       </div>
       <div class="rail" id="justInRail"></div>
     </section>
@@ -508,4 +507,69 @@ function openSheet(id){
   var s=sheetShoe, pr=priceRange(s);
   document.getElementById('pdBody').innerHTML=
    '<div class="art">'+shoeSVG(s.hue)
-   +'<div class="photo-note">Placeholder art. Every real pair gets shot from 4 angles before listing.</div>
+   +'<div class="photo-note">Placeholder art. Every real pair gets shot from 4 angles before listing.</div></div>'
+   +'<div><div class="brand">'+s.brand+(s.tag==='drop'?' &middot; this week&#8217;s drop':'')+'</div>'
+   +'<h2>'+s.name+'</h2><div class="colorway">'+s.color+'</div>'
+   +'<div class="cond-line">Condition: <b>'+s.cond+'</b> &middot; cleaned and verified in house</div>'
+   +'<div class="price" id="sheetPrice">'+(pr.min===pr.max?'$'+pr.min:'$'+pr.min+' to $'+pr.max)+'</div>'
+   +'<div class="size-h"><b>Size (US M)</b><span id="sizeHint" style="font-size:.8rem;color:var(--dim)">'+(pr.min===pr.max?'one price, all sizes':'price varies by size')+'</span></div>'
+   +'<div class="sizes">'+SIZES.map(function(z){return '<button class="size'+(s.sizes[z]?'':' out')+'" onclick="pickSize(\''+z+'\',this)">'+z+'</button>';}).join('')+'</div>'
+   +'<div class="cta"><button class="btn" onclick="addToBag()">Add to bag</button>'
+   +'<button class="btn line" onclick="closeAll()">Back</button></div>'
+   +'<div class="fine">Ships in 1 to 2 business days. 3-day return window on misgraded pairs. Checkout runs through Shopify with Shop Pay and Apple Pay.</div></div>';
+  document.getElementById('veil').classList.add('open');
+  document.getElementById('sheet').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function pickSize(z,el){
+  sheetSize=z;
+  document.querySelectorAll('.size').forEach(function(b){b.classList.remove('on');});
+  el.classList.add('on');
+  document.getElementById('sheetPrice').textContent='$'+sheetShoe.sizes[z];
+  document.getElementById('sizeHint').textContent='size '+z;
+}
+function closeSheet(){
+  document.getElementById('veil').classList.remove('open');
+  document.getElementById('sheet').classList.remove('open');
+  document.body.style.overflow='';
+}
+function addToBag(){
+  if(!sheetSize){toast('Pick a size first');return;}
+  bag.push({shoe:sheetShoe,size:sheetSize,price:sheetShoe.sizes[sheetSize]});
+  updateBadge();closeAll();toast('Added to bag');
+}
+
+/* bag */
+function updateBadge(){
+  var b=document.getElementById('bagBadge');
+  b.textContent=bag.length;b.classList.toggle('on',bag.length>0);
+}
+function renderBag(){
+  var el=document.getElementById('bagBody');
+  if(!bag.length){
+    el.innerHTML='<div class="bag-empty">Your bag is empty.</div>'
+     +'<div style="text-align:center;padding-bottom:34px"><button class="btn" onclick="go(\'shop\')">Back to the shop</button></div>';
+    return;
+  }
+  var sub=bag.reduce(function(t,i){return t+i.price;},0);
+  el.innerHTML=bag.map(function(i,x){
+    return '<div class="bag-item"><div class="thumb">'+shoeSVG(i.shoe.hue)+'</div>'
+     +'<div class="bi"><b>'+i.shoe.name+'</b><span>'+i.shoe.brand+' &middot; Size '+i.size+' &middot; '+i.shoe.cond+'</span></div>'
+     +'<div class="bip">$'+i.price+'</div>'
+     +'<button class="rm" aria-label="Remove" onclick="bag.splice('+x+',1);updateBadge();renderBag()">&times;</button></div>';
+  }).join('')
+  +'<div class="bag-foot"><div class="row"><span>Subtotal</span><span>$'+sub+'</span></div>'
+  +'<div class="row"><span>Shipping</span><span>At checkout</span></div>'
+  +'<div class="row total"><span>Total</span><span>$'+sub+'</span></div>'
+  +'<button class="btn" style="width:100%;padding:16px">Checkout</button></div>';
+}
+function toast(msg){
+  var t=document.getElementById('toastEl');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(function(){t.classList.remove('show');},1700);
+}
+
+renderShop();
+</script>
+</body>
+</html>
