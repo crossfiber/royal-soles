@@ -8,6 +8,13 @@ Live preview: https://crossfiber.github.io/royal-soles/
 
 ## Update log
 
+- 2026-07-06: v1.0 PUBLISHED by client (role MAIN on royalsoles.net). Shipped v1.0.1 as
+  unpublished theme: object-fit contain on all product imagery (cards, product page, cart
+  thumbs) so photos of any shape display uniformly instead of crop-zooming (Midnight Navy bug).
+  Iteration model locked in: design/code changes ship as new unpublished theme versions via
+  themeCreate, Cross/client publish in admin (API cannot write to or publish the live theme).
+  Product/inventory/price changes need NO theme updates, they flow automatically. by Cowork session
+
 - 2026-07-06: SHOPIFY DEPLOY. Ported v0.5 prototype to a full Liquid theme (layout, index with
   Just In shelf + size-filterable grid, product page with per-variant pricing, collection with
   Drop hero + countdown, cart, search, stubs, settings schema). Created "Shop All" smart
