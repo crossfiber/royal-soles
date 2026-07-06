@@ -13,4 +13,7 @@ Repo: github.com/crossfiber/royal-soles (private, hosted on Pages).
   Desktop top nav added, bottom tabs mobile only. Live on Pages (repo now public, free-plan
   Pages requirement). by Cowork session
 
-- 2026-07-06: v0.2 rebuild per Cross feedback and Builda protocol. Inve
+- 2026-07-06: v0.2 rebuild per Cross feedback and Builda protocol. Inve- 2026-07-06: Per-size pricing added. sizes map now carries a price per size, sheet shows
+  range until a size is picked then snaps to that size's price, cards show from-price,
+  bag charges the picked size. Matches existing store data model (per-variant pricing).
+  by Cowork session

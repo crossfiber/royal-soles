@@ -308,21 +308,27 @@
 <script>
 "use strict";
 /* Demo catalog. Used pairs, every listing carries a condition grade.
-   SVG art is a stand-in: every real pair gets photographed, no stock images. */
+   SVG art is a stand-in: every real pair gets photographed, no stock images.
+   sizes: size -> price for that size (used pairs price by size). 0 = sold out.
+   Some shoes run one flat price across sizes, some vary. Both supported. */
 const SHOES=[
-  {id:1, brand:"Jordan", name:"Air Jordan 4 Retro Thunder", color:"Black / Tour Yellow", price:245, cond:"9/10", hue:"#F2B90D", tag:"drop", fresh:1, sizes:{"8":1,"8.5":1,"9":1,"9.5":0,"10":1,"10.5":1,"11":0,"12":1}},
-  {id:2, brand:"Nike", name:"Dunk Low Panda", color:"White / Black", price:135, cond:"8/10", hue:"#E8E8E8", tag:"in", fresh:1, sizes:{"8":1,"8.5":1,"9":1,"9.5":1,"10":1,"10.5":1,"11":1,"12":1}},
-  {id:3, brand:"Jordan", name:"Air Jordan 1 High Royal Reimagined", color:"Royal Blue / Black", price:210, cond:"9/10", hue:"#3D6BFF", tag:"drop", fresh:1, sizes:{"8":1,"8.5":0,"9":1,"9.5":1,"10":0,"10.5":1,"11":1,"12":0}},
-  {id:4, brand:"New Balance", name:"550 White Grey", color:"White / Grey", price:120, cond:"8/10", hue:"#C9C9C9", tag:"in", fresh:0, sizes:{"8":1,"8.5":1,"9":1,"9.5":1,"10":1,"10.5":0,"11":1,"12":1}},
-  {id:5, brand:"Nike", name:"Air Max 1 86 Big Bubble", color:"University Red / White", price:150, cond:"9/10", hue:"#E53935", tag:"in", fresh:1, sizes:{"8":0,"8.5":1,"9":1,"9.5":1,"10":1,"10.5":1,"11":0,"12":1}},
-  {id:6, brand:"Adidas", name:"Samba OG Cloud White", color:"White / Gum", price:110, cond:"7/10", hue:"#F1EDE4", tag:"in", fresh:0, sizes:{"8":1,"8.5":1,"9":0,"9.5":1,"10":1,"10.5":1,"11":1,"12":1}},
-  {id:7, brand:"Jordan", name:"Air Jordan 3 White Cement", color:"White / Cement Grey", price:230, cond:"9/10", hue:"#B9B9B9", tag:"drop", fresh:0, sizes:{"8":1,"8.5":1,"9":1,"9.5":1,"10":0,"10.5":0,"11":1,"12":1}},
-  {id:8, brand:"Nike", name:"SB Dunk City of Gold", color:"Metallic Gold / Black", price:265, cond:"10/10", hue:"#D4A017", tag:"drop", fresh:1, sizes:{"8":0,"8.5":1,"9":1,"9.5":1,"10":1,"10.5":1,"11":1,"12":0}},
-  {id:9, brand:"Asics", name:"Gel-Kayano 14 Cream", color:"Cream / Silver", price:140, cond:"8/10", hue:"#EADFC8", tag:"in", fresh:0, sizes:{"8":1,"8.5":1,"9":1,"9.5":1,"10":1,"10.5":1,"11":1,"12":1}},
-  {id:10, brand:"Yeezy", name:"Boost 350 V2 Onyx", color:"Onyx / Onyx", price:240, cond:"9/10", hue:"#3A3A3A", tag:"in", fresh:0, sizes:{"8":1,"8.5":0,"9":1,"9.5":0,"10":1,"10.5":1,"11":1,"12":1}},
-  {id:11, brand:"New Balance", name:"2002R Protection Pack", color:"Rain Cloud", price:165, cond:"9/10", hue:"#8FA3AD", tag:"drop", fresh:0, sizes:{"8":1,"8.5":1,"9":1,"9.5":1,"10":1,"10.5":0,"11":0,"12":1}},
-  {id:12, brand:"Nike", name:"Air Force 1 07 Triple White", color:"White / White", price:115, cond:"7/10", hue:"#FFFFFF", tag:"in", fresh:0, sizes:{"8":1,"8.5":1,"9":1,"9.5":1,"10":1,"10.5":1,"11":1,"12":1}},
+  {id:1, brand:"Jordan", name:"Air Jordan 4 Retro Thunder", color:"Black / Tour Yellow", cond:"9/10", hue:"#F2B90D", tag:"drop", fresh:1, sizes:{"8":245,"8.5":245,"9":260,"9.5":0,"10":275,"10.5":275,"11":0,"12":250}},
+  {id:2, brand:"Nike", name:"Dunk Low Panda", color:"White / Black", cond:"8/10", hue:"#E8E8E8", tag:"in", fresh:1, sizes:{"8":135,"8.5":135,"9":135,"9.5":135,"10":135,"10.5":135,"11":135,"12":135}},
+  {id:3, brand:"Jordan", name:"Air Jordan 1 High Royal Reimagined", color:"Royal Blue / Black", cond:"9/10", hue:"#3D6BFF", tag:"drop", fresh:1, sizes:{"8":210,"8.5":0,"9":230,"9.5":230,"10":0,"10.5":240,"11":225,"12":0}},
+  {id:4, brand:"New Balance", name:"550 White Grey", color:"White / Grey", cond:"8/10", hue:"#C9C9C9", tag:"in", fresh:0, sizes:{"8":120,"8.5":120,"9":120,"9.5":120,"10":120,"10.5":0,"11":120,"12":120}},
+  {id:5, brand:"Nike", name:"Air Max 1 86 Big Bubble", color:"University Red / White", cond:"9/10", hue:"#E53935", tag:"in", fresh:1, sizes:{"8":0,"8.5":150,"9":155,"9.5":155,"10":165,"10.5":165,"11":0,"12":150}},
+  {id:6, brand:"Adidas", name:"Samba OG Cloud White", color:"White / Gum", cond:"7/10", hue:"#F1EDE4", tag:"in", fresh:0, sizes:{"8":110,"8.5":110,"9":0,"9.5":110,"10":110,"10.5":110,"11":110,"12":110}},
+  {id:7, brand:"Jordan", name:"Air Jordan 3 White Cement", color:"White / Cement Grey", cond:"9/10", hue:"#B9B9B9", tag:"drop", fresh:0, sizes:{"8":230,"8.5":230,"9":245,"9.5":245,"10":0,"10.5":0,"11":250,"12":235}},
+  {id:8, brand:"Nike", name:"SB Dunk City of Gold", color:"Metallic Gold / Black", cond:"10/10", hue:"#D4A017", tag:"drop", fresh:1, sizes:{"8":0,"8.5":265,"9":280,"9.5":280,"10":295,"10.5":295,"11":270,"12":0}},
+  {id:9, brand:"Asics", name:"Gel-Kayano 14 Cream", color:"Cream / Silver", cond:"8/10", hue:"#EADFC8", tag:"in", fresh:0, sizes:{"8":140,"8.5":140,"9":140,"9.5":140,"10":140,"10.5":140,"11":140,"12":140}},
+  {id:10, brand:"Yeezy", name:"Boost 350 V2 Onyx", color:"Onyx / Onyx", cond:"9/10", hue:"#3A3A3A", tag:"in", fresh:0, sizes:{"8":240,"8.5":0,"9":250,"9.5":0,"10":260,"10.5":260,"11":245,"12":240}},
+  {id:11, brand:"New Balance", name:"2002R Protection Pack", color:"Rain Cloud", cond:"9/10", hue:"#8FA3AD", tag:"drop", fresh:0, sizes:{"8":165,"8.5":165,"9":175,"9.5":175,"10":185,"10.5":0,"11":0,"12":170}},
+  {id:12, brand:"Nike", name:"Air Force 1 07 Triple White", color:"White / White", cond:"7/10", hue:"#FFFFFF", tag:"in", fresh:0, sizes:{"8":115,"8.5":115,"9":115,"9.5":115,"10":115,"10.5":115,"11":115,"12":115}},
 ];
+function priceRange(s){
+  var ps=SIZES.map(function(z){return s.sizes[z];}).filter(function(p){return p>0;});
+  return {min:Math.min.apply(null,ps),max:Math.max.apply(null,ps)};
+}
 const BRANDS=["All","Jordan","Nike","Adidas","New Balance","Yeezy","Asics"];
 const SIZES=["8","8.5","9","9.5","10","10.5","11","12"];
 
@@ -338,6 +344,7 @@ function shade(hex){var n=parseInt(hex.slice(1),16),r=Math.max(0,(n>>16)-70),g=M
 var bag=[], activeBrand="All", activeSize=null;
 
 function cardHTML(s){
+  var pr=priceRange(s);
   return '<div class="card" onclick="openSheet('+s.id+')">'
    +'<div class="art" style="background:linear-gradient(160deg,'+s.hue+'0F, var(--panel) 62%)">'
    +(s.tag==='drop'?'<span class="flag">Drop</span>':'')
@@ -346,7 +353,7 @@ function cardHTML(s){
    +'<div class="meta">'
    +'<div class="name">'+s.name+'</div>'
    +'<div class="sub">'+s.brand+' &middot; '+s.color+'</div>'
-   +'<div class="price">$'+s.price+'</div>'
+   +'<div class="price">'+(pr.min===pr.max?'$'+pr.min:'$'+pr.min+'+')+'</div>'
    +'</div></div>';
 }
 function fill(id,list,emptyMsg){
@@ -416,15 +423,15 @@ function runSearch(q){
 var sheetShoe=null, sheetSize=null;
 function openSheet(id){
   sheetShoe=SHOES.find(function(s){return s.id===id;});sheetSize=null;
-  var s=sheetShoe;
+  var s=sheetShoe, pr=priceRange(s);
   document.getElementById('pdBody').innerHTML=
    '<div class="art">'+shoeSVG(s.hue)
    +'<div class="photo-note">Placeholder art. Every real pair gets shot from 4 angles before listing.</div></div>'
    +'<div><div class="brand">'+s.brand+(s.tag==='drop'?' &middot; this week’s drop':'')+'</div>'
    +'<h2>'+s.name+'</h2><div class="colorway">'+s.color+'</div>'
    +'<div class="cond-line">Condition: <b>'+s.cond+'</b> &middot; cleaned and verified in house</div>'
-   +'<div class="price">$'+s.price+'</div>'
-   +'<div class="size-h"><b>Size (US M)</b><button type="button" onclick="toast(\'Size guide coming in v1\')">Size guide</button></div>'
+   +'<div class="price" id="sheetPrice">'+(pr.min===pr.max?'$'+pr.min:'$'+pr.min+' to $'+pr.max)+'</div>'
+   +'<div class="size-h"><b>Size (US M)</b><span id="sizeHint" style="font-size:.8rem;color:var(--dim)">'+(pr.min===pr.max?'one price, all sizes':'price varies by size')+'</span></div>'
    +'<div class="sizes">'+SIZES.map(function(z){return '<button class="size'+(s.sizes[z]?'':' out')+'" onclick="pickSize(\''+z+'\',this)">'+z+'</button>';}).join('')+'</div>'
    +'<div class="cta"><button class="btn" onclick="addToBag()">Add to bag</button>'
    +'<button class="btn line" onclick="closeSheet()">Back</button></div>'
@@ -437,6 +444,8 @@ function pickSize(z,el){
   sheetSize=z;
   document.querySelectorAll('.size').forEach(function(b){b.classList.remove('on');});
   el.classList.add('on');
+  document.getElementById('sheetPrice').textContent='$'+sheetShoe.sizes[z];
+  document.getElementById('sizeHint').textContent='size '+z;
 }
 function closeSheet(){
   document.getElementById('veil').classList.remove('open');
@@ -445,7 +454,7 @@ function closeSheet(){
 }
 function addToBag(){
   if(!sheetSize){toast('Pick a size first');return;}
-  bag.push({shoe:sheetShoe,size:sheetSize});
+  bag.push({shoe:sheetShoe,size:sheetSize,price:sheetShoe.sizes[sheetSize]});
   updateBadge();closeSheet();toast('Added to bag');
 }
 
@@ -461,11 +470,11 @@ function renderBag(){
      +'<div style="text-align:center;padding-bottom:34px"><button class="btn" onclick="go(\'shop\')">Back to the shop</button></div>';
     return;
   }
-  var sub=bag.reduce(function(t,i){return t+i.shoe.price;},0);
+  var sub=bag.reduce(function(t,i){return t+i.price;},0);
   el.innerHTML=bag.map(function(i,x){
     return '<div class="bag-item"><div class="thumb">'+shoeSVG(i.shoe.hue)+'</div>'
      +'<div class="bi"><b>'+i.shoe.name+'</b><span>'+i.shoe.brand+' &middot; Size '+i.size+' &middot; '+i.shoe.cond+'</span></div>'
-     +'<div class="bip">$'+i.shoe.price+'</div>'
+     +'<div class="bip">$'+i.price+'</div>'
      +'<button class="rm" aria-label="Remove" onclick="bag.splice('+x+',1);updateBadge();renderBag()">&times;</button></div>';
   }).join('')
   +'<div class="bag-foot"><div class="row"><span>Subtotal</span><span>$'+sub+'</span></div>'
@@ -483,4 +492,4 @@ renderShop();
 </script>
 </body>
 </html>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+                                                                                                                                                                                                                                                                                                                                                                                                                                                           
