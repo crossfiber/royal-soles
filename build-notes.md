@@ -1,7 +1,15 @@
 # Royal Soles — Preliminary Build Notes
 
 **Client:** Royal Soles (IG: @royalsoless) · **Agency:** Cross Designs
-**Status:** Concept prototype v0.1 — for client review, pre-Shopify implementation
+**Status:** Concept prototype v0.2, for client review, pre-Shopify implementation
+
+## v0.2 changes (Cross feedback)
+- Opening view is the general inventory. The Drop is its own tab with the countdown.
+- Stripped glass blur, pills, emojis, glow shadows. Flat, solid, hairline grid.
+- Fonts per font bible: Archivo italic headline + Barlow body.
+- Every listing carries a condition grade since stock is used pairs.
+- Placeholder SVGs stay until real per-pair photos exist. No stock photos, ever:
+  used shoes means each individual pair must be shot (4 angles) before listing.
 
 ## What this is
 A single-file, app-style storefront prototype (`index.html`). Open it on a phone —
@@ -26,14 +34,4 @@ Black `#0A0A0A` · Gold `#FFC72C` · Off-white ink. Heavy italic Archivo for hea
    modified premium theme
 2. Products = 1 per shoe with size variants (full size runs)
 3. Collections: "Drops" (scheduled publishing, Friday 7PM) + "The Vault" (evergreen)
-4. Facebook & Instagram channel → Meta Commerce Manager for IG Shop; inventory syncs
-   both ways automatically
-5. Checkout stays 100% Shopify (Shop Pay / Apple Pay)
-6. Client manages inventory via Shopify mobile app; bulk weekly intake via CSV/Matrixify
-
-## Open questions for client
-- Product photography: who shoots the 300 pairs/week? Consistent background?
-- Does he want accounts/wishlists ("cop lists") at launch?
-- Sizing: mens only, or GS/womens too?
-- Drop cadence confirmed Friday 7PM EST?
-- Shipping rates + return policy
+4. Facebook & Instagram channel → Meta Commer
