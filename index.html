@@ -4,13 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Royal Soles | Used Heat, Real Prices</title>
-<meta name="theme-color" content="#0A0A0A">
+<meta name="theme-color" content="#000000">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,500;0,600;0,700;1,800;1,900&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#0C0C0C; --surface:#151515; --line:#242424;
+    --bg:#000000; --panel:#0D0D0D; --panel2:#141414; --line:#1E1E1E;
     --gold:#F2B90D; --ink:#F2EFE6; --dim:#8F8B80;
     --nav-h:60px;
   }
@@ -20,89 +20,108 @@
     line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh;
     padding-bottom:calc(var(--nav-h) + env(safe-area-inset-bottom));
   }
+  @media(min-width:900px){body{padding-bottom:0}}
   h1,h2,h3{font-family:'Archivo',sans-serif;font-style:italic;font-weight:900;text-transform:uppercase;line-height:1.02}
   button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
   img{display:block;max-width:100%}
-  .wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 18px}
   @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
-  /* top bar: solid, flat */
-  .topbar{position:sticky;top:0;z-index:50;background:var(--bg);border-bottom:1px solid var(--line)}
-  .topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:56px}
-  .topbar img{height:34px;width:auto}
-  .top-actions{display:flex;gap:2px}
+  /* ===== header: centered logo, icons right ===== */
+  header{background:var(--bg);border-bottom:1px solid var(--line)}
+  .masthead{position:relative;display:flex;align-items:center;justify-content:center;padding:18px 0 14px}
+  .masthead img{height:64px;width:auto}
+  @media(min-width:700px){.masthead img{height:84px}}
+  .head-icons{position:absolute;right:18px;top:50%;transform:translateY(-50%);display:flex;gap:2px}
   .icon-btn{width:42px;height:42px;display:grid;place-items:center;position:relative}
   .icon-btn svg{width:20px;height:20px;stroke:var(--ink);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-  .badge{position:absolute;top:3px;right:2px;min-width:16px;height:16px;background:var(--gold);color:#0C0C0C;font-size:.66rem;font-weight:700;display:none;place-items:center;padding:0 4px}
+  .badge{position:absolute;top:3px;right:2px;min-width:16px;height:16px;background:var(--gold);color:#000;font-size:.66rem;font-weight:700;display:none;place-items:center;padding:0 4px}
   .badge.on{display:grid}
+  /* desktop nav under logo */
+  .desk-nav{display:none;justify-content:center;gap:34px;padding:0 0 14px}
+  .desk-nav button{font-size:.85rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);padding:4px 2px}
+  .desk-nav button.on{color:var(--gold);box-shadow:0 2px 0 var(--gold)}
+  .desk-nav button:hover{color:var(--ink)}
+  @media(min-width:900px){.desk-nav{display:flex}}
 
   .view{display:none}
   .view.active{display:block;animation:fade .2s ease}
   @keyframes fade{from{opacity:0}to{opacity:1}}
 
-  /* ===== SHOP (default view: the full inventory) ===== */
-  .shop-head{padding:22px 0 2px;display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
-  .shop-head h1{font-size:clamp(1.6rem,5vw,2.2rem)}
-  .shop-head h1 i{color:var(--gold)}
-  .shop-head .count{color:var(--dim);font-size:.88rem}
-  .dropline{margin-top:10px;border:1px solid var(--line);border-left:3px solid var(--gold);background:var(--surface);padding:11px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer}
-  .dropline b{font-weight:600;font-size:.92rem}
-  .dropline span{color:var(--dim);font-size:.85rem;font-variant-numeric:tabular-nums;white-space:nowrap}
-  .filters{display:flex;gap:6px;overflow-x:auto;padding:16px 0 4px;scrollbar-width:none}
-  .filters::-webkit-scrollbar{display:none}
-  .chip{flex:0 0 auto;font-size:.86rem;font-weight:600;padding:8px 15px;background:var(--surface);border:1px solid var(--line);color:var(--dim);transition:color .12s,border-color .12s}
-  .chip.on{border-color:var(--gold);color:var(--gold)}
-  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin:14px 0 34px}
-  @media(min-width:640px){.grid{grid-template-columns:repeat(3,1fr)}}
-  @media(min-width:960px){.grid{grid-template-columns:repeat(4,1fr)}}
-  .empty{grid-column:1/-1;text-align:center;color:var(--dim);padding:48px 16px;background:var(--bg);font-size:.95rem}
+  /* ===== drop strip ===== */
+  .dropstrip{background:var(--gold);color:#000;cursor:pointer}
+  .dropstrip .wrap{display:flex;justify-content:center;gap:14px;align-items:baseline;padding:9px 18px;font-weight:700;font-size:.88rem}
+  .dropstrip span{font-variant-numeric:tabular-nums;font-weight:600}
 
-  /* product tile: flat, hairline grid */
-  .card{background:var(--bg);cursor:pointer;transition:background .15s}
-  .card:hover{background:var(--surface)}
-  .card .art{aspect-ratio:1/.82;display:grid;place-items:center;position:relative;overflow:hidden}
-  .card .art svg{width:76%;height:auto;transition:transform .2s}
-  .card:hover .art svg{transform:rotate(-5deg)}
-  .flag{position:absolute;top:0;left:0;font-size:.64rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:4px 8px;background:var(--gold);color:#0C0C0C}
-  .flag.used{background:var(--surface);color:var(--dim);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .card .meta{padding:10px 12px 13px;border-top:1px solid var(--line)}
-  .card .brand{font-size:.7rem;text-transform:uppercase;color:var(--dim);font-weight:600}
-  .card .name{font-weight:500;font-size:.9rem;margin:2px 0 6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em}
-  .card .row{display:flex;justify-content:space-between;align-items:baseline}
-  .card .price{font-family:'Archivo';font-style:italic;font-weight:800;font-size:1rem}
-  .card .cond{font-size:.72rem;color:var(--dim)}
+  /* ===== shelf: Just In ===== */
+  .shelf{padding:28px 0 6px}
+  .shelf-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px}
+  .shelf-h h2{font-size:clamp(1.4rem,4.5vw,1.9rem)}
+  .shelf-h h2 i{color:var(--gold)}
+  .shelf-h span{color:var(--dim);font-size:.85rem}
+  .rail{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:16px;scrollbar-width:none}
+  .rail::-webkit-scrollbar{display:none}
+  .rail .card{flex:0 0 72%;max-width:300px;scroll-snap-align:start}
+  @media(min-width:700px){.rail .card{flex-basis:280px}}
+
+  /* ===== card: floating panel, no borders ===== */
+  .card{cursor:pointer}
+  .card .art{aspect-ratio:1/.85;display:grid;place-items:center;position:relative;background:var(--panel);overflow:hidden;transition:background .18s}
+  .card:hover .art{background:var(--panel2)}
+  .card .art svg{width:74%;height:auto;filter:drop-shadow(0 16px 14px rgba(0,0,0,.55));transition:transform .22s}
+  .card:hover .art svg{transform:rotate(-5deg) scale(1.04)}
+  .flag{position:absolute;top:10px;left:10px;font-size:.64rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;background:var(--gold);color:#000}
+  .cond-flag{position:absolute;top:10px;right:10px;font-size:.68rem;font-weight:600;color:var(--dim)}
+  .card .meta{padding:11px 2px 2px}
+  .card .name{font-weight:500;font-size:.94rem;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .card .sub{font-size:.78rem;color:var(--dim);margin-top:1px}
+  .card .price{font-family:'Archivo';font-style:italic;font-weight:800;font-size:1.02rem;margin-top:5px}
+
+  /* ===== full grid ===== */
+  .catalog{padding:16px 0 40px}
+  .catalog-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
+  .catalog-h h2{font-size:clamp(1.4rem,4.5vw,1.9rem)}
+  .catalog-h span{color:var(--dim);font-size:.85rem}
+  .filters{display:flex;gap:8px;overflow-x:auto;padding:14px 0 6px;scrollbar-width:none}
+  .filters::-webkit-scrollbar{display:none}
+  .chip{flex:0 0 auto;font-size:.86rem;font-weight:600;padding:8px 16px;background:var(--panel);color:var(--dim);transition:color .12s,background .12s}
+  .chip.on{background:var(--gold);color:#000}
+  .chip:hover{color:var(--ink)}
+  .chip.on:hover{color:#000}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px 14px;margin-top:14px}
+  @media(min-width:640px){.grid{grid-template-columns:repeat(3,1fr)}}
+  @media(min-width:960px){.grid{grid-template-columns:repeat(4,1fr);gap:26px 18px}}
+  .empty{grid-column:1/-1;text-align:center;color:var(--dim);padding:48px 16px;font-size:.95rem}
 
   /* ===== DROP tab ===== */
-  .drop-hero{padding:30px 0 22px;border-bottom:1px solid var(--line)}
+  .drop-hero{padding:34px 0 26px;border-bottom:1px solid var(--line)}
   .drop-hero .when{color:var(--gold);font-weight:600;font-size:.9rem}
-  .drop-hero h1{font-size:clamp(2.2rem,8vw,3.4rem);margin:8px 0 10px}
+  .drop-hero h1{font-size:clamp(2.2rem,8vw,3.6rem);margin:8px 0 10px}
   .drop-hero p{color:var(--dim);max-width:46ch;font-size:.97rem}
-  .clock{font-family:'Archivo';font-style:italic;font-weight:900;font-size:clamp(2.4rem,10vw,4rem);color:var(--ink);font-variant-numeric:tabular-nums;margin:18px 0 2px;letter-spacing:.01em}
+  .clock{font-family:'Archivo';font-style:italic;font-weight:900;font-size:clamp(2.4rem,10vw,4.2rem);font-variant-numeric:tabular-nums;margin:18px 0 2px}
   .clock b{color:var(--gold);font-weight:900}
-  .clock-labels{display:flex;gap:0;color:var(--dim);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em}
+  .clock-labels{display:flex;color:var(--dim);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em}
   .clock-labels span{width:2.6ch;text-align:center}
   .clock-labels span.gap{width:1ch}
-  @media(min-width:560px){.clock-labels span{width:3.2ch}}
-  .notify{margin-top:20px;display:flex;gap:8px;max-width:420px}
-  .notify input{flex:1;background:var(--surface);border:1px solid var(--line);color:var(--ink);font-family:inherit;font-size:.95rem;padding:13px 14px;outline:none}
+  @media(min-width:560px){.clock-labels span{width:3.4ch}}
+  .notify{margin-top:22px;display:flex;gap:8px;max-width:430px}
+  .notify input{flex:1;background:var(--panel);border:1px solid var(--line);color:var(--ink);font-family:inherit;font-size:.95rem;padding:13px 14px;outline:none}
   .notify input:focus{border-color:var(--gold)}
-  .btn{display:inline-block;font-weight:700;font-size:.95rem;background:var(--gold);color:#0C0C0C;padding:13px 22px;transition:background .15s}
+  .btn{display:inline-block;font-weight:700;font-size:.95rem;background:var(--gold);color:#000;padding:13px 24px;transition:background .15s}
   .btn:hover{background:#FFD23E}
   .btn.line{background:none;border:1px solid var(--line);color:var(--ink)}
-  .drop-list-h{padding:24px 0 0;display:flex;justify-content:space-between;align-items:baseline}
-  .drop-list-h h2{font-size:1.2rem}
-  .drop-list-h span{color:var(--dim);font-size:.85rem}
+  .btn.line:hover{border-color:var(--gold);background:none;color:var(--gold)}
 
   /* ===== search ===== */
-  .search-wrap{padding:20px 0}
-  .search-bar{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);padding:13px 15px}
-  .search-bar:focus-within{border-color:var(--gold)}
+  .search-wrap{padding:24px 0}
+  .search-bar{display:flex;align-items:center;gap:10px;background:var(--panel);padding:14px 16px}
+  .search-bar:focus-within{outline:1px solid var(--gold)}
   .search-bar svg{width:18px;height:18px;stroke:var(--dim);fill:none;stroke-width:2;stroke-linecap:round}
   .search-bar input{flex:1;background:none;border:none;outline:none;color:var(--ink);font-size:1rem;font-family:inherit}
   .search-bar input::placeholder{color:var(--dim)}
 
   /* ===== product sheet ===== */
-  .veil{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:80;opacity:0;pointer-events:none;transition:opacity .2s}
+  .veil{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:80;opacity:0;pointer-events:none;transition:opacity .2s}
   .veil.open{opacity:1;pointer-events:auto}
   .sheet{
     position:fixed;left:0;right:0;bottom:0;z-index:90;max-height:88vh;overflow-y:auto;
@@ -111,32 +130,35 @@
     padding-bottom:calc(18px + env(safe-area-inset-bottom));
   }
   .sheet.open{transform:none}
-  @media(min-width:900px){.sheet{max-width:900px;left:50%;transform:translate(-50%,100%);bottom:5vh;border:1px solid var(--line);border-top:2px solid var(--gold)}.sheet.open{transform:translate(-50%,0)}}
-  .pd{padding:20px 20px 8px;display:grid;gap:4px}
-  @media(min-width:900px){.pd{grid-template-columns:1fr 1fr;gap:28px;padding:28px}}
-  .pd .art{border:1px solid var(--line);aspect-ratio:1/.9;display:grid;place-items:center;position:relative}
-  .pd .art svg{width:80%}
-  .pd .photo-note{position:absolute;bottom:0;left:0;right:0;font-size:.7rem;color:var(--dim);padding:6px 10px;border-top:1px solid var(--line);background:var(--surface)}
+  @media(min-width:900px){.sheet{max-width:920px;left:50%;transform:translate(-50%,100%);bottom:5vh;border:1px solid var(--line);border-top:2px solid var(--gold)}.sheet.open{transform:translate(-50%,0)}}
+  .pd{padding:22px 20px 8px;display:grid;gap:4px}
+  @media(min-width:900px){.pd{grid-template-columns:1fr 1fr;gap:30px;padding:30px}}
+  .pd .art{background:var(--panel);aspect-ratio:1/.9;display:grid;place-items:center;position:relative}
+  .pd .art svg{width:78%;filter:drop-shadow(0 18px 16px rgba(0,0,0,.55))}
+  .pd .photo-note{position:absolute;bottom:0;left:0;right:0;font-size:.7rem;color:var(--dim);padding:6px 10px;background:var(--panel2)}
   .pd .brand{font-size:.74rem;text-transform:uppercase;color:var(--dim);font-weight:600;margin-top:14px}
   .pd h2{font-size:1.45rem;margin:3px 0 2px}
   .pd .colorway{color:var(--dim);font-size:.9rem}
-  .pd .cond-line{margin-top:8px;font-size:.88rem;color:var(--ink)}
+  .pd .cond-line{margin-top:8px;font-size:.88rem}
   .pd .cond-line b{color:var(--gold);font-weight:600}
   .pd .price{font-family:'Archivo';font-style:italic;font-weight:900;font-size:1.7rem;margin:10px 0 2px}
   .size-h{display:flex;justify-content:space-between;align-items:center;margin:16px 0 9px}
   .size-h b{font-size:.86rem;text-transform:uppercase;letter-spacing:.03em}
   .size-h button{font-size:.8rem;color:var(--dim);text-decoration:underline}
   .sizes{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
-  .size{padding:12px 0;text-align:center;background:var(--surface);border:1px solid var(--line);font-weight:600;font-size:.92rem}
-  .size.on{border-color:var(--gold);color:var(--gold)}
+  .size{padding:12px 0;text-align:center;background:var(--panel);font-weight:600;font-size:.92rem}
+  .size.on{background:var(--gold);color:#000;font-weight:700}
   .size.out{opacity:.25;text-decoration:line-through;pointer-events:none}
   .pd .cta{display:flex;gap:8px;margin-top:18px}
   .pd .cta .btn{flex:1;text-align:center;padding:15px}
   .pd .fine{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);font-size:.8rem;color:var(--dim);line-height:1.7}
 
   /* ===== bag ===== */
+  .shop-head{padding:24px 0 2px}
+  .shop-head h1{font-size:clamp(1.6rem,5vw,2.2rem)}
+  .shop-head h1 i{color:var(--gold)}
   .bag-item{display:flex;gap:13px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
-  .bag-item .thumb{width:72px;height:60px;border:1px solid var(--line);display:grid;place-items:center;flex-shrink:0}
+  .bag-item .thumb{width:76px;height:62px;background:var(--panel);display:grid;place-items:center;flex-shrink:0}
   .bag-item .thumb svg{width:80%}
   .bag-item .bi{flex:1;min-width:0}
   .bag-item .bi b{font-size:.9rem;font-weight:600;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -148,29 +170,31 @@
   .bag-foot .row.total{color:var(--ink);font-weight:700;font-size:1.08rem;margin:10px 0 16px}
   .bag-empty{text-align:center;color:var(--dim);padding:52px 16px 22px}
 
-  /* ===== tab bar: solid, flat ===== */
+  /* ===== mobile tab bar ===== */
   nav.tabbar{
     position:fixed;left:0;right:0;bottom:0;z-index:70;height:calc(var(--nav-h) + env(safe-area-inset-bottom));
     background:var(--bg);border-top:1px solid var(--line);
     display:flex;padding:0 4px env(safe-area-inset-bottom);
   }
+  @media(min-width:900px){nav.tabbar{display:none}}
   .tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--dim);font-size:.66rem;font-weight:600;text-transform:uppercase;letter-spacing:.05em}
   .tab svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
   .tab.on{color:var(--gold);box-shadow:inset 0 2px 0 var(--gold)}
-  .tab:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
+  .tab:focus-visible,.desk-nav button:focus-visible{outline:2px solid var(--gold);outline-offset:-2px}
 
-  .toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + 18px);transform:translate(-50%,16px);background:var(--gold);color:#0C0C0C;font-weight:700;font-size:.88rem;padding:12px 22px;z-index:100;opacity:0;pointer-events:none;transition:all .2s}
+  .toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + 18px);transform:translate(-50%,16px);background:var(--gold);color:#000;font-weight:700;font-size:.88rem;padding:12px 22px;z-index:100;opacity:0;pointer-events:none;transition:all .2s}
+  @media(min-width:900px){.toast{bottom:30px}}
   .toast.show{opacity:1;transform:translate(-50%,0)}
-  footer{border-top:1px solid var(--line);padding:24px 0;color:var(--dim);font-size:.8rem}
+  footer{border-top:1px solid var(--line);padding:26px 0;color:var(--dim);font-size:.8rem}
   footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
 </style>
 </head>
 <body>
 
-<header class="topbar">
-  <div class="wrap">
+<header>
+  <div class="wrap masthead">
     <img src="assets/logo.jpeg" alt="Royal Soles">
-    <div class="top-actions">
+    <div class="head-icons">
       <button class="icon-btn" onclick="go('search')" aria-label="Search">
         <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
       </button>
@@ -180,32 +204,47 @@
       </button>
     </div>
   </div>
+  <nav class="desk-nav" aria-label="Primary">
+    <button class="on" data-tab="shop" onclick="go('shop')">Shop</button>
+    <button data-tab="drop" onclick="go('drop')">The Drop</button>
+    <button data-tab="search" onclick="go('search')">Search</button>
+    <button data-tab="bag" onclick="go('bag')">Bag</button>
+  </nav>
 </header>
 
-<!-- SHOP: opens here. The whole inventory, filterable. -->
+<div class="dropstrip" onclick="go('drop')" role="button" tabindex="0">
+  <div class="wrap"><b>Next drop Friday 7PM EST</b><span id="miniClock"></span></div>
+</div>
+
+<!-- SHOP: opens here -->
 <main class="view active" id="view-shop">
   <div class="wrap">
-    <div class="shop-head">
-      <h1>The <i>Inventory</i></h1>
-      <span class="count" id="shopCount"></span>
-    </div>
-    <div class="dropline" onclick="go('drop')" role="button" tabindex="0">
-      <b>Next drop: Friday 7PM EST</b>
-      <span id="miniClock"></span>
-    </div>
-    <div class="filters" id="brandChips"></div>
-    <div class="filters" id="sizeChips" style="padding-top:2px"></div>
-    <div class="grid" id="shopGrid"></div>
+    <section class="shelf">
+      <div class="shelf-h">
+        <h2>Just <i>In</i></h2>
+        <span>fresh pickups this week</span>
+      </div>
+      <div class="rail" id="justInRail"></div>
+    </section>
+    <section class="catalog">
+      <div class="catalog-h">
+        <h2>Shop <i>All</i></h2>
+        <span id="shopCount"></span>
+      </div>
+      <div class="filters" id="brandChips"></div>
+      <div class="filters" id="sizeChips" style="padding-top:0"></div>
+      <div class="grid" id="shopGrid"></div>
+    </section>
   </div>
   <footer>
     <div class="wrap">
       <span>Royal Soles</span>
-      <span>Concept build v0.2 by Cross Designs</span>
+      <span>Concept build v0.3 by Cross Designs</span>
     </div>
   </footer>
 </main>
 
-<!-- DROP: its own tab. Countdown plus this week's pairs. -->
+<!-- DROP -->
 <main class="view" id="view-drop">
   <div class="wrap">
     <section class="drop-hero">
@@ -219,11 +258,10 @@
         <button class="btn" onclick="toast('You are on the list')">Remind me</button>
       </div>
     </section>
-    <div class="drop-list-h">
-      <h2>This Week</h2>
-      <span id="dropCount"></span>
-    </div>
-    <div class="grid" id="dropGrid"></div>
+    <section class="catalog">
+      <div class="catalog-h"><h2>This <i>Week</i></h2><span id="dropCount"></span></div>
+      <div class="grid" id="dropGrid"></div>
+    </section>
   </div>
 </main>
 
@@ -235,7 +273,7 @@
         <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
         <input id="searchInput" type="search" placeholder="Search brand, model, colorway, size" oninput="runSearch(this.value)">
       </div>
-      <div class="grid" id="searchGrid" style="margin-top:14px"></div>
+      <div class="grid" id="searchGrid" style="margin-top:18px"></div>
     </div>
   </div>
 </main>
@@ -248,7 +286,6 @@
   </div>
 </main>
 
-<!-- PRODUCT SHEET -->
 <div class="veil" id="veil" onclick="closeSheet()"></div>
 <div class="sheet" id="sheet" role="dialog" aria-modal="true">
   <div class="pd" id="pdBody"></div>
@@ -269,21 +306,21 @@
 
 <script>
 "use strict";
-/* Demo catalog. Used pairs, so every listing carries a condition grade.
+/* Demo catalog. Used pairs, every listing carries a condition grade.
    SVG art is a stand-in: every real pair gets photographed, no stock images. */
 const SHOES=[
-  {id:1, brand:"Jordan", name:"Air Jordan 4 Retro Thunder", color:"Black / Tour Yellow", price:245, cond:"9/10", hue:"#F2B90D", tag:"drop", sizes:{"8":1,"8.5":1,"9":1,"9.5":0,"10":1,"10.5":1,"11":0,"12":1}},
-  {id:2, brand:"Nike", name:"Dunk Low Panda", color:"White / Black", price:135, cond:"8/10", hue:"#E8E8E8", tag:"in", sizes:{"8":1,"8.5":1,"9":1,"9.5":1,"10":1,"10.5":1,"11":1,"12":1}},
-  {id:3, brand:"Jordan", name:"Air Jordan 1 High Royal Reimagined", color:"Royal Blue / Black", price:210, cond:"9/10", hue:"#3D6BFF", tag:"drop", sizes:{"8":1,"8.5":0,"9":1,"9.5":1,"10":0,"10.5":1,"11":1,"12":0}},
-  {id:4, brand:"New Balance", name:"550 White Grey", color:"White / Grey", price:120, cond:"8/10", hue:"#C9C9C9", tag:"in", sizes:{"8":1,"8.5":1,"9":1,"9.5":1,"10":1,"10.5":0,"11":1,"12":1}},
-  {id:5, brand:"Nike", name:"Air Max 1 86 Big Bubble", color:"University Red / White", price:150, cond:"9/10", hue:"#E53935", tag:"in", sizes:{"8":0,"8.5":1,"9":1,"9.5":1,"10":1,"10.5":1,"11":0,"12":1}},
-  {id:6, brand:"Adidas", name:"Samba OG Cloud White", color:"White / Gum", price:110, cond:"7/10", hue:"#F1EDE4", tag:"in", sizes:{"8":1,"8.5":1,"9":0,"9.5":1,"10":1,"10.5":1,"11":1,"12":1}},
-  {id:7, brand:"Jordan", name:"Air Jordan 3 White Cement", color:"White / Cement Grey", price:230, cond:"9/10", hue:"#B9B9B9", tag:"drop", sizes:{"8":1,"8.5":1,"9":1,"9.5":1,"10":0,"10.5":0,"11":1,"12":1}},
-  {id:8, brand:"Nike", name:"SB Dunk City of Gold", color:"Metallic Gold / Black", price:265, cond:"10/10", hue:"#D4A017", tag:"drop", sizes:{"8":0,"8.5":1,"9":1,"9.5":1,"10":1,"10.5":1,"11":1,"12":0}},
-  {id:9, brand:"Asics", name:"Gel-Kayano 14 Cream", color:"Cream / Silver", price:140, cond:"8/10", hue:"#EADFC8", tag:"in", sizes:{"8":1,"8.5":1,"9":1,"9.5":1,"10":1,"10.5":1,"11":1,"12":1}},
-  {id:10, brand:"Yeezy", name:"Boost 350 V2 Onyx", color:"Onyx / Onyx", price:240, cond:"9/10", hue:"#3A3A3A", tag:"in", sizes:{"8":1,"8.5":0,"9":1,"9.5":0,"10":1,"10.5":1,"11":1,"12":1}},
-  {id:11, brand:"New Balance", name:"2002R Protection Pack", color:"Rain Cloud", price:165, cond:"9/10", hue:"#8FA3AD", tag:"drop", sizes:{"8":1,"8.5":1,"9":1,"9.5":1,"10":1,"10.5":0,"11":0,"12":1}},
-  {id:12, brand:"Nike", name:"Air Force 1 07 Triple White", color:"White / White", price:115, cond:"7/10", hue:"#FFFFFF", tag:"in", sizes:{"8":1,"8.5":1,"9":1,"9.5":1,"10":1,"10.5":1,"11":1,"12":1}},
+  {id:1, brand:"Jordan", name:"Air Jordan 4 Retro Thunder", color:"Black / Tour Yellow", price:245, cond:"9/10", hue:"#F2B90D", tag:"drop", fresh:1, sizes:{"8":1,"8.5":1,"9":1,"9.5":0,"10":1,"10.5":1,"11":0,"12":1}},
+  {id:2, brand:"Nike", name:"Dunk Low Panda", color:"White / Black", price:135, cond:"8/10", hue:"#E8E8E8", tag:"in", fresh:1, sizes:{"8":1,"8.5":1,"9":1,"9.5":1,"10":1,"10.5":1,"11":1,"12":1}},
+  {id:3, brand:"Jordan", name:"Air Jordan 1 High Royal Reimagined", color:"Royal Blue / Black", price:210, cond:"9/10", hue:"#3D6BFF", tag:"drop", fresh:1, sizes:{"8":1,"8.5":0,"9":1,"9.5":1,"10":0,"10.5":1,"11":1,"12":0}},
+  {id:4, brand:"New Balance", name:"550 White Grey", color:"White / Grey", price:120, cond:"8/10", hue:"#C9C9C9", tag:"in", fresh:0, sizes:{"8":1,"8.5":1,"9":1,"9.5":1,"10":1,"10.5":0,"11":1,"12":1}},
+  {id:5, brand:"Nike", name:"Air Max 1 86 Big Bubble", color:"University Red / White", price:150, cond:"9/10", hue:"#E53935", tag:"in", fresh:1, sizes:{"8":0,"8.5":1,"9":1,"9.5":1,"10":1,"10.5":1,"11":0,"12":1}},
+  {id:6, brand:"Adidas", name:"Samba OG Cloud White", color:"White / Gum", price:110, cond:"7/10", hue:"#F1EDE4", tag:"in", fresh:0, sizes:{"8":1,"8.5":1,"9":0,"9.5":1,"10":1,"10.5":1,"11":1,"12":1}},
+  {id:7, brand:"Jordan", name:"Air Jordan 3 White Cement", color:"White / Cement Grey", price:230, cond:"9/10", hue:"#B9B9B9", tag:"drop", fresh:0, sizes:{"8":1,"8.5":1,"9":1,"9.5":1,"10":0,"10.5":0,"11":1,"12":1}},
+  {id:8, brand:"Nike", name:"SB Dunk City of Gold", color:"Metallic Gold / Black", price:265, cond:"10/10", hue:"#D4A017", tag:"drop", fresh:1, sizes:{"8":0,"8.5":1,"9":1,"9.5":1,"10":1,"10.5":1,"11":1,"12":0}},
+  {id:9, brand:"Asics", name:"Gel-Kayano 14 Cream", color:"Cream / Silver", price:140, cond:"8/10", hue:"#EADFC8", tag:"in", fresh:0, sizes:{"8":1,"8.5":1,"9":1,"9.5":1,"10":1,"10.5":1,"11":1,"12":1}},
+  {id:10, brand:"Yeezy", name:"Boost 350 V2 Onyx", color:"Onyx / Onyx", price:240, cond:"9/10", hue:"#3A3A3A", tag:"in", fresh:0, sizes:{"8":1,"8.5":0,"9":1,"9.5":0,"10":1,"10.5":1,"11":1,"12":1}},
+  {id:11, brand:"New Balance", name:"2002R Protection Pack", color:"Rain Cloud", price:165, cond:"9/10", hue:"#8FA3AD", tag:"drop", fresh:0, sizes:{"8":1,"8.5":1,"9":1,"9.5":1,"10":1,"10.5":0,"11":0,"12":1}},
+  {id:12, brand:"Nike", name:"Air Force 1 07 Triple White", color:"White / White", price:115, cond:"7/10", hue:"#FFFFFF", tag:"in", fresh:0, sizes:{"8":1,"8.5":1,"9":1,"9.5":1,"10":1,"10.5":1,"11":1,"12":1}},
 ];
 const BRANDS=["All","Jordan","Nike","Adidas","New Balance","Yeezy","Asics"];
 const SIZES=["8","8.5","9","9.5","10","10.5","11","12"];
@@ -300,23 +337,25 @@ function shade(hex){var n=parseInt(hex.slice(1),16),r=Math.max(0,(n>>16)-70),g=M
 var bag=[], activeBrand="All", activeSize=null;
 
 function cardHTML(s){
-  var stock=Object.keys(s.sizes).filter(function(z){return s.sizes[z];});
   return '<div class="card" onclick="openSheet('+s.id+')">'
-   +'<div class="art" style="background:'+s.hue+'14">'
-   +(s.tag==='drop'?'<span class="flag">Drop</span>':'<span class="flag used">'+s.cond+'</span>')
+   +'<div class="art" style="background:linear-gradient(160deg,'+s.hue+'0F, var(--panel) 62%)">'
+   +(s.tag==='drop'?'<span class="flag">Drop</span>':'')
+   +'<span class="cond-flag">'+s.cond+'</span>'
    +shoeSVG(s.hue)+'</div>'
-   +'<div class="meta"><div class="brand">'+s.brand+'</div>'
+   +'<div class="meta">'
    +'<div class="name">'+s.name+'</div>'
-   +'<div class="row"><span class="price">$'+s.price+'</span><span class="cond">'+stock.length+' sizes</span></div>'
+   +'<div class="sub">'+s.brand+' &middot; '+s.color+'</div>'
+   +'<div class="price">$'+s.price+'</div>'
    +'</div></div>';
 }
 function fill(id,list,emptyMsg){
   document.getElementById(id).innerHTML=list.map(cardHTML).join('')
-   ||'<div class="empty">'+(emptyMsg||'Nothing here right now. Check the drop tab or come back soon.')+'</div>';
+   ||'<div class="empty">'+(emptyMsg||'Nothing here right now. Check the drop or come back soon.')+'</div>';
 }
 
 /* SHOP */
 function renderShop(){
+  fill('justInRail',SHOES.filter(function(s){return s.fresh;}));
   var bc=document.getElementById('brandChips');
   bc.innerHTML=BRANDS.map(function(b){return '<button class="chip'+(b===activeBrand?' on':'')+'" onclick="setBrand(\''+b+'\')">'+b+'</button>';}).join('');
   var sc=document.getElementById('sizeChips');
@@ -325,7 +364,7 @@ function renderShop(){
   var list=SHOES.slice();
   if(activeBrand!=='All')list=list.filter(function(s){return s.brand===activeBrand;});
   if(activeSize)list=list.filter(function(s){return s.sizes[activeSize];});
-  document.getElementById('shopCount').textContent=list.length+' pairs in stock';
+  document.getElementById('shopCount').textContent=list.length+' pairs';
   fill('shopGrid',list);
 }
 function setBrand(b){activeBrand=b;renderShop();}
@@ -338,7 +377,7 @@ function renderDrop(){
   fill('dropGrid',list,'This week’s pairs go up before the timer hits zero.');
 }
 
-/* countdown to Friday 7pm */
+/* countdown */
 function nextFriday(){var d=new Date();d.setDate(d.getDate()+(((5-d.getDay())%7+7)%7));d.setHours(19,0,0,0);if(d<=new Date())d.setDate(d.getDate()+7);return d;}
 var target=nextFriday();
 function pad(v){return String(v).padStart(2,'0');}
@@ -354,7 +393,7 @@ setInterval(tick,1000);tick();
 function go(tab){
   document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active');});
   document.getElementById('view-'+tab).classList.add('active');
-  document.querySelectorAll('.tab').forEach(function(t){t.classList.toggle('on',t.dataset.tab===tab);});
+  document.querySelectorAll('.tab,.desk-nav button').forEach(function(t){t.classList.toggle('on',t.dataset.tab===tab);});
   window.scrollTo({top:0});
   if(tab==='shop')renderShop();
   if(tab==='drop')renderDrop();
@@ -378,7 +417,7 @@ function openSheet(id){
   sheetShoe=SHOES.find(function(s){return s.id===id;});sheetSize=null;
   var s=sheetShoe;
   document.getElementById('pdBody').innerHTML=
-   '<div class="art" style="background:'+s.hue+'10">'+shoeSVG(s.hue)
+   '<div class="art">'+shoeSVG(s.hue)
    +'<div class="photo-note">Placeholder art. Every real pair gets shot from 4 angles before listing.</div></div>'
    +'<div><div class="brand">'+s.brand+(s.tag==='drop'?' &middot; this week’s drop':'')+'</div>'
    +'<h2>'+s.name+'</h2><div class="colorway">'+s.color+'</div>'
@@ -418,12 +457,12 @@ function renderBag(){
   var el=document.getElementById('bagBody');
   if(!bag.length){
     el.innerHTML='<div class="bag-empty">Your bag is empty.</div>'
-     +'<div style="text-align:center;padding-bottom:34px"><button class="btn" onclick="go(\'shop\')">Back to the inventory</button></div>';
+     +'<div style="text-align:center;padding-bottom:34px"><button class="btn" onclick="go(\'shop\')">Back to the shop</button></div>';
     return;
   }
   var sub=bag.reduce(function(t,i){return t+i.shoe.price;},0);
   el.innerHTML=bag.map(function(i,x){
-    return '<div class="bag-item"><div class="thumb" style="background:'+i.shoe.hue+'14">'+shoeSVG(i.shoe.hue)+'</div>'
+    return '<div class="bag-item"><div class="thumb">'+shoeSVG(i.shoe.hue)+'</div>'
      +'<div class="bi"><b>'+i.shoe.name+'</b><span>'+i.shoe.brand+' &middot; Size '+i.size+' &middot; '+i.shoe.cond+'</span></div>'
      +'<div class="bip">$'+i.shoe.price+'</div>'
      +'<button class="rm" aria-label="Remove" onclick="bag.splice('+x+',1);updateBadge();renderBag()">&times;</button></div>';
@@ -443,4 +482,4 @@ renderShop();
 </script>
 </body>
 </html>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           

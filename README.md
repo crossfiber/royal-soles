@@ -6,9 +6,11 @@ Repo: github.com/crossfiber/royal-soles (private, hosted on Pages).
 
 ## Update log
 
-- 2026-07-06: v0.2 rebuild per Cross feedback and Builda protocol. Inventory is now the opening
-  view, Drop moved to its own tab with full-width countdown. Removed all glass blur, pills,
-  emojis, glow shadows, rounded icon buttons. Flat hairline-grid tiles, solid nav. Fonts swapped
-  to Archivo (headline, matches logo slant) + Barlow (body) per font bible. Condition grades
-  added to every listing (used pairs). Zero em dashes, blacklist copy scan clean. by Cowork session
-- 2026-07-06: v0.1 initial prototype and repo push. by Cowork session (pre-protocol, superseded)
+- 2026-07-06: v0.3 layout redesign per Cross feedback. Background now pure #000 to match logo
+  black. Logo centered and enlarged in masthead. Opening view restructured GOAT/Flight Club
+  style: Just In shelf of large cards up top, spacious Shop All grid below, no hairline tile
+  borders (cards float on lifted panels with whitespace gaps). Gold dropstrip under header.
+  Desktop top nav added, bottom tabs mobile only. Live on Pages (repo now public, free-plan
+  Pages requirement). by Cowork session
+
+- 2026-07-06: v0.2 rebuild per Cross feedback and Builda protocol. Inve
