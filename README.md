@@ -8,6 +8,14 @@ Live preview: https://crossfiber.github.io/royal-soles/
 
 ## Update log
 
+- 2026-07-06: HOTFIX. index.html had been silently truncated at 29,171 bytes during v0.4/v0.5
+  edits (the old file's exact size, some sync layer was capping writes). The unterminated
+  script tag disabled ALL JS: no products, dead tabs. Rebuilt the full file in the sandbox,
+  added real integrity checks (file must end with /html, script extraction must be non-empty,
+  all functions present) since previous syntax checks were passing vacuously on empty
+  extractions. Also: masthead logo bumped to 110px mobile / 150px desktop, footer logo to 84px,
+  removed "fresh pickups this week" tagline. by Cowork session
+
 - 2026-07-06: v0.5 mobile UI pass. Root-caused the uneven column bug: nowrap product names were
   inflating grid tracks (also the source of the earlier zoom overflow); fixed with min-width:0
   on grid and rail cards. Just In rail now shows exactly 2 full cards per screen, no cut-off
