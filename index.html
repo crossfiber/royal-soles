@@ -62,8 +62,8 @@
   .shelf-h span{color:var(--dim);font-size:.85rem}
   .rail{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:16px;scrollbar-width:none}
   .rail::-webkit-scrollbar{display:none}
-  .rail .card{flex:0 0 72%;max-width:300px;scroll-snap-align:start}
-  @media(min-width:700px){.rail .card{flex-basis:280px}}
+  .rail .card{flex:0 0 calc(50% - 7px);min-width:0;scroll-snap-align:start}
+  @media(min-width:700px){.rail .card{flex:0 0 280px}}
 
   /* ===== card: floating panel, no borders ===== */
   .card{cursor:pointer}
@@ -83,13 +83,23 @@
   .catalog-h{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:4px}
   .catalog-h h2{font-size:clamp(1.4rem,4.5vw,1.9rem)}
   .catalog-h span{color:var(--dim);font-size:.85rem}
-  .filters{display:flex;gap:8px;overflow-x:auto;padding:14px 0 6px;scrollbar-width:none}
-  .filters::-webkit-scrollbar{display:none}
-  .chip{flex:0 0 auto;font-size:.86rem;font-weight:600;padding:8px 16px;background:var(--panel);color:var(--dim);transition:color .12s,background .12s}
+  .toolbar{display:flex;justify-content:space-between;align-items:center;padding:14px 0 2px}
+  .filter-btn{display:inline-flex;align-items:center;gap:9px;background:var(--panel);font-weight:600;font-size:.9rem;padding:11px 18px}
+  .filter-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round}
+  .filter-btn b{background:var(--gold);color:#000;font-size:.7rem;min-width:18px;height:18px;display:grid;place-items:center;padding:0 5px}
+  .filter-btn b:empty{display:none}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{font-size:.88rem;font-weight:600;padding:10px 17px;background:var(--panel2);color:var(--dim);transition:color .12s,background .12s}
   .chip.on{background:var(--gold);color:#000}
   .chip:hover{color:var(--ink)}
   .chip.on:hover{color:#000}
+  .fgroup{margin-bottom:22px}
+  .fgroup h3{font-size:1.05rem;margin-bottom:11px}
+  .fsheet-body{padding:24px 20px 8px}
+  .fsheet-foot{display:flex;gap:8px;padding:4px 20px calc(20px + env(safe-area-inset-bottom))}
+  .fsheet-foot .btn{flex:1;text-align:center;padding:15px}
   .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px 14px;margin-top:14px}
+  .grid>.card{min-width:0}
   @media(min-width:640px){.grid{grid-template-columns:repeat(3,1fr)}}
   @media(min-width:960px){.grid{grid-template-columns:repeat(4,1fr);gap:26px 18px}}
   .empty{grid-column:1/-1;text-align:center;color:var(--dim);padding:48px 16px;font-size:.95rem}
@@ -101,10 +111,6 @@
   .drop-hero p{color:var(--dim);max-width:46ch;font-size:.97rem}
   .clock{font-family:'Archivo';font-style:italic;font-weight:900;font-size:clamp(2.4rem,10vw,4.2rem);font-variant-numeric:tabular-nums;margin:18px 0 2px}
   .clock b{color:var(--gold);font-weight:900}
-  .clock-labels{display:flex;color:var(--dim);font-size:.72rem;text-transform:uppercase;letter-spacing:.08em}
-  .clock-labels span{width:2.6ch;text-align:center}
-  .clock-labels span.gap{width:1ch}
-  @media(min-width:560px){.clock-labels span{width:3.4ch}}
   .notify{margin-top:22px;display:flex;gap:8px;max-width:430px}
   .notify input{flex:1;background:var(--panel);border:1px solid var(--line);color:var(--ink);font-family:inherit;font-size:.95rem;padding:13px 14px;outline:none}
   .notify input:focus{border-color:var(--gold)}
@@ -186,8 +192,19 @@
   .toast{position:fixed;left:50%;bottom:calc(var(--nav-h) + 18px);transform:translate(-50%,16px);background:var(--gold);color:#000;font-weight:700;font-size:.88rem;padding:12px 22px;z-index:100;opacity:0;pointer-events:none;transition:all .2s}
   @media(min-width:900px){.toast{bottom:30px}}
   .toast.show{opacity:1;transform:translate(-50%,0)}
-  footer{border-top:1px solid var(--line);padding:26px 0;color:var(--dim);font-size:.8rem}
-  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+  footer{border-top:1px solid var(--line);margin-top:34px;padding:36px 0 26px}
+  .f-grid{display:grid;gap:28px;grid-template-columns:1fr 1fr}
+  @media(min-width:700px){.f-grid{grid-template-columns:2fr 1fr 1fr;gap:40px}}
+  .f-brand{grid-column:1/-1}
+  @media(min-width:700px){.f-brand{grid-column:auto}}
+  .f-brand img{height:52px;width:auto;margin-bottom:12px}
+  .f-brand p{color:var(--dim);font-size:.88rem;max-width:34ch;line-height:1.6}
+  footer h3{font-family:'Barlow';font-style:normal;font-weight:700;font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:12px}
+  footer ul{list-style:none}
+  footer li{margin-bottom:9px}
+  footer a,.flink{color:var(--ink);text-decoration:none;font-size:.92rem;font-weight:500;padding:0;text-align:left}
+  footer a:hover,.flink:hover{color:var(--gold)}
+  .f-bottom{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;border-top:1px solid var(--line);margin-top:30px;padding-top:18px;color:var(--dim);font-size:.78rem}
 </style>
 </head>
 <body>
@@ -232,17 +249,16 @@
         <h2>Shop <i>All</i></h2>
         <span id="shopCount"></span>
       </div>
-      <div class="filters" id="brandChips"></div>
-      <div class="filters" id="sizeChips" style="padding-top:0"></div>
+      <div class="toolbar">
+        <button class="filter-btn" onclick="openFilters()">
+          <svg viewBox="0 0 24 24"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+          Filters<b id="filterCount"></b>
+        </button>
+        <button class="filter-btn" onclick="resetFilters()" id="clearBtn" style="display:none">Clear</button>
+      </div>
       <div class="grid" id="shopGrid"></div>
     </section>
   </div>
-  <footer>
-    <div class="wrap">
-      <span>Royal Soles</span>
-      <span>Concept build v0.3 by Cross Designs</span>
-    </div>
-  </footer>
 </main>
 
 <!-- DROP -->
@@ -253,7 +269,6 @@
       <h1>The Drop</h1>
       <p>New pairs hit every week at one set time. Once a pair sells it does not come back, so be here when the clock hits zero.</p>
       <div class="clock" id="bigClock">00<b>:</b>00<b>:</b>00<b>:</b>00</div>
-      <div class="clock-labels"><span>Days</span><span class="gap"></span><span>Hrs</span><span class="gap"></span><span>Min</span><span class="gap"></span><span>Sec</span></div>
       <div class="notify">
         <input type="email" placeholder="you@email.com" aria-label="Email for drop reminders">
         <button class="btn" onclick="toast('You are on the list')">Remind me</button>
@@ -287,10 +302,56 @@
   </div>
 </main>
 
-<div class="veil" id="veil" onclick="closeSheet()"></div>
+<div class="veil" id="veil" onclick="closeAll()"></div>
 <div class="sheet" id="sheet" role="dialog" aria-modal="true">
   <div class="pd" id="pdBody"></div>
 </div>
+
+<!-- FILTER SHEET -->
+<div class="sheet" id="fsheet" role="dialog" aria-modal="true" aria-label="Filters">
+  <div class="fsheet-body">
+    <div class="fgroup"><h3>Brand</h3><div class="chips" id="brandChips"></div></div>
+    <div class="fgroup"><h3>Size (US M)</h3><div class="chips" id="sizeChips"></div></div>
+  </div>
+  <div class="fsheet-foot">
+    <button class="btn line" onclick="resetFilters()">Reset</button>
+    <button class="btn" id="applyBtn" onclick="closeAll()">Show all</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div class="f-brand">
+        <img src="assets/logo.jpeg" alt="Royal Soles">
+        <p>Used heat, cleaned and verified in house. New pairs drop every Friday at 7PM EST.</p>
+      </div>
+      <div>
+        <h3>Shop</h3>
+        <ul>
+          <li><button class="flink" onclick="go('shop')">Shop All</button></li>
+          <li><button class="flink" onclick="go('drop')">The Drop</button></li>
+          <li><button class="flink" onclick="go('search')">Search</button></li>
+          <li><button class="flink" onclick="go('bag')">Your Bag</button></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Info</h3>
+        <ul>
+          <li><a href="https://www.instagram.com/royalsoless/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><button class="flink" onclick="toast('Coming in v1')">Shipping and Returns</button></li>
+          <li><button class="flink" onclick="toast('Coming in v1')">Size Guide</button></li>
+          <li><button class="flink" onclick="toast('Coming in v1')">Sell Us Your Pairs</button></li>
+        </ul>
+      </div>
+    </div>
+    <div class="f-bottom">
+      <span>&copy; 2026 Royal Soles. All rights reserved.</span>
+      <span>Site by Cross Designs</span>
+    </div>
+  </div>
+</footer>
 
 <div class="toast" id="toastEl">Added to bag</div>
 
@@ -362,21 +423,42 @@ function fill(id,list,emptyMsg){
 }
 
 /* SHOP */
+function filteredList(){
+  var list=SHOES.slice();
+  if(activeBrand!=='All')list=list.filter(function(s){return s.brand===activeBrand;});
+  if(activeSize)list=list.filter(function(s){return s.sizes[activeSize];});
+  return list;
+}
 function renderShop(){
   fill('justInRail',SHOES.filter(function(s){return s.fresh;}));
   var bc=document.getElementById('brandChips');
   bc.innerHTML=BRANDS.map(function(b){return '<button class="chip'+(b===activeBrand?' on':'')+'" onclick="setBrand(\''+b+'\')">'+b+'</button>';}).join('');
   var sc=document.getElementById('sizeChips');
-  sc.innerHTML='<button class="chip'+(!activeSize?' on':'')+'" onclick="setSize(null)">All sizes</button>'
+  sc.innerHTML='<button class="chip'+(!activeSize?' on':'')+'" onclick="setSize(null)">All</button>'
    +SIZES.map(function(z){return '<button class="chip'+(z===activeSize?' on':'')+'" onclick="setSize(\''+z+'\')">'+z+'</button>';}).join('');
-  var list=SHOES.slice();
-  if(activeBrand!=='All')list=list.filter(function(s){return s.brand===activeBrand;});
-  if(activeSize)list=list.filter(function(s){return s.sizes[activeSize];});
+  var list=filteredList();
+  var n=(activeBrand!=='All'?1:0)+(activeSize?1:0);
   document.getElementById('shopCount').textContent=list.length+' pairs';
+  document.getElementById('filterCount').textContent=n?n:'';
+  document.getElementById('clearBtn').style.display=n?'inline-flex':'none';
+  document.getElementById('applyBtn').textContent='Show '+list.length+' pairs';
   fill('shopGrid',list);
 }
 function setBrand(b){activeBrand=b;renderShop();}
 function setSize(z){activeSize=z;renderShop();}
+function resetFilters(){activeBrand='All';activeSize=null;renderShop();}
+function openFilters(){
+  renderShop();
+  document.getElementById('veil').classList.add('open');
+  document.getElementById('fsheet').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeAll(){
+  closeSheet();
+  document.getElementById('fsheet').classList.remove('open');
+  document.getElementById('veil').classList.remove('open');
+  document.body.style.overflow='';
+}
 
 /* DROP */
 function renderDrop(){
@@ -426,70 +508,4 @@ function openSheet(id){
   var s=sheetShoe, pr=priceRange(s);
   document.getElementById('pdBody').innerHTML=
    '<div class="art">'+shoeSVG(s.hue)
-   +'<div class="photo-note">Placeholder art. Every real pair gets shot from 4 angles before listing.</div></div>'
-   +'<div><div class="brand">'+s.brand+(s.tag==='drop'?' &middot; this week’s drop':'')+'</div>'
-   +'<h2>'+s.name+'</h2><div class="colorway">'+s.color+'</div>'
-   +'<div class="cond-line">Condition: <b>'+s.cond+'</b> &middot; cleaned and verified in house</div>'
-   +'<div class="price" id="sheetPrice">'+(pr.min===pr.max?'$'+pr.min:'$'+pr.min+' to $'+pr.max)+'</div>'
-   +'<div class="size-h"><b>Size (US M)</b><span id="sizeHint" style="font-size:.8rem;color:var(--dim)">'+(pr.min===pr.max?'one price, all sizes':'price varies by size')+'</span></div>'
-   +'<div class="sizes">'+SIZES.map(function(z){return '<button class="size'+(s.sizes[z]?'':' out')+'" onclick="pickSize(\''+z+'\',this)">'+z+'</button>';}).join('')+'</div>'
-   +'<div class="cta"><button class="btn" onclick="addToBag()">Add to bag</button>'
-   +'<button class="btn line" onclick="closeSheet()">Back</button></div>'
-   +'<div class="fine">Ships in 1 to 2 business days. 3-day return window on misgraded pairs. Checkout runs through Shopify with Shop Pay and Apple Pay.</div></div>';
-  document.getElementById('veil').classList.add('open');
-  document.getElementById('sheet').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function pickSize(z,el){
-  sheetSize=z;
-  document.querySelectorAll('.size').forEach(function(b){b.classList.remove('on');});
-  el.classList.add('on');
-  document.getElementById('sheetPrice').textContent='$'+sheetShoe.sizes[z];
-  document.getElementById('sizeHint').textContent='size '+z;
-}
-function closeSheet(){
-  document.getElementById('veil').classList.remove('open');
-  document.getElementById('sheet').classList.remove('open');
-  document.body.style.overflow='';
-}
-function addToBag(){
-  if(!sheetSize){toast('Pick a size first');return;}
-  bag.push({shoe:sheetShoe,size:sheetSize,price:sheetShoe.sizes[sheetSize]});
-  updateBadge();closeSheet();toast('Added to bag');
-}
-
-/* bag */
-function updateBadge(){
-  var b=document.getElementById('bagBadge');
-  b.textContent=bag.length;b.classList.toggle('on',bag.length>0);
-}
-function renderBag(){
-  var el=document.getElementById('bagBody');
-  if(!bag.length){
-    el.innerHTML='<div class="bag-empty">Your bag is empty.</div>'
-     +'<div style="text-align:center;padding-bottom:34px"><button class="btn" onclick="go(\'shop\')">Back to the shop</button></div>';
-    return;
-  }
-  var sub=bag.reduce(function(t,i){return t+i.price;},0);
-  el.innerHTML=bag.map(function(i,x){
-    return '<div class="bag-item"><div class="thumb">'+shoeSVG(i.shoe.hue)+'</div>'
-     +'<div class="bi"><b>'+i.shoe.name+'</b><span>'+i.shoe.brand+' &middot; Size '+i.size+' &middot; '+i.shoe.cond+'</span></div>'
-     +'<div class="bip">$'+i.price+'</div>'
-     +'<button class="rm" aria-label="Remove" onclick="bag.splice('+x+',1);updateBadge();renderBag()">&times;</button></div>';
-  }).join('')
-  +'<div class="bag-foot"><div class="row"><span>Subtotal</span><span>$'+sub+'</span></div>'
-  +'<div class="row"><span>Shipping</span><span>At checkout</span></div>'
-  +'<div class="row total"><span>Total</span><span>$'+sub+'</span></div>'
-  +'<button class="btn" style="width:100%;padding:16px">Checkout</button></div>';
-}
-function toast(msg){
-  var t=document.getElementById('toastEl');
-  t.textContent=msg;t.classList.add('show');
-  setTimeout(function(){t.classList.remove('show');},1700);
-}
-
-renderShop();
-</script>
-</body>
-</html>
-                                                                                                                                                                                                                                                                                                                                                                                                                                                           
+   +'<div class="photo-note">Placeholder art. Every real pair gets shot from 4 angles before listing.</div>
