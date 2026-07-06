@@ -8,6 +8,12 @@ Live preview: https://crossfiber.github.io/royal-soles/
 
 ## Update log
 
+- 2026-07-06: v1.0.3 shipped (supersedes v1.0.1 and v1.0.2, both can be deleted from the theme
+  library). Built off v1.0 exactly: grid cards and cart thumbs unchanged (cover). Product page
+  keeps the standard v1.0 frame (aspect 1/.9, panel bg) but the image scales down to fit
+  inside it (contain, no padding) so vertical photos display at the same size as horizontal
+  ones instead of zoom-cropping and blowing up the page. by Cowork session
+
 - 2026-07-06: v1.0 PUBLISHED by client (role MAIN on royalsoles.net). Shipped v1.0.1 as
   unpublished theme: object-fit contain on all product imagery (cards, product page, cart
   thumbs) so photos of any shape display uniformly instead of crop-zooming (Midnight Navy bug).
